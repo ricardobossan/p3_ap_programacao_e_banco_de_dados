@@ -1,0 +1,48 @@
+@startuml
+
+'!define DARKBLUE
+'!include https://raw.githubusercontent.com/Drakemor/RedDress-PlantUML/master/style.puml
+
+title Diagrama Entidade Relacionamento: Estúdio Cinematográfico
+
+enum Estudio {
+  cnpj : integer PK
+  nome : varchar 
+  data-fundacao : date
+  faturamento-ano-anterior : float
+}
+
+enum Filme {
+  copyright : integer PK
+  nome : varchar 
+  meses-conclusao : integer null
+  ano : integer null
+  custo : integer null
+  estudio : Estudio
+}
+
+enum Ator {
+  cpf : integer PK
+  nome : varchar 
+  seguro : integer 
+  nacionalidade : varchar
+  nascimento : date
+  sexo : varchar
+  tipos-de-papeis : varchar
+  ultimo-papel : Papel
+}
+
+enum Papel {
+  codigo : integer PK
+  personagem : varchar
+  cache : float
+  filme : Filme
+  ator : Ator 
+}
+
+Estudio "1" - "*" Filme : Grava
+Filme "1" - "*" Ator : Atua
+Ator "1" - "*" Papel : Interpreta
+Filme "1" - "*" Papel : É interpretado
+
+@enduml
